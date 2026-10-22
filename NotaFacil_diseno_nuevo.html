@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Calcula tu promedio escolar y descubre qué calificación necesitas. Herramientas gratuitas para estudiantes.">
+  <meta name="theme-color" content="#f5f8ff">
+  <title>NotaFácil — Calculadoras escolares gratuitas</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fc;
+      --surface: #ffffff;
+      --ink: #17243b;
+      --muted: #64748b;
+      --blue: #315eea;
+      --blue-dark: #2448c7;
+      --blue-soft: #edf2ff;
+      --line: #e2e8f3;
+      --green: #13795b;
+      --shadow: 0 12px 34px rgba(30, 48, 90, .07);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; }
+    .wrap { width: min(960px, calc(100% - 32px)); margin-inline: auto; }
+    .topbar { padding: 19px 0; background: rgba(255,255,255,.9); border-bottom: 1px solid var(--line); }
+    .brand-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+    .brand { display: flex; align-items: center; gap: 11px; font-size: 1.15rem; font-weight: 850; letter-spacing: -.035em; }
+    .logo {
+      display: grid; place-items: center; width: 42px; height: 42px; flex: 0 0 42px;
+      border-radius: 14px; color: white; font-size: 1.3rem;
+      background: linear-gradient(145deg, #4777ff, #284bd4);
+      box-shadow: 0 6px 14px rgba(49,94,234,.24);
+    }
+    .top-label { color: var(--muted); font-size: .85rem; font-weight: 650; }
+    .hero { padding: 42px 0 32px; background: radial-gradient(ellipse at 80% 0%, #e2eaff 0, transparent 44%); }
+    .eyebrow { display: inline-flex; align-items: center; gap: 7px; padding: 6px 11px; border: 1px solid #dce5ff; border-radius: 999px; background: #fff; color: var(--blue-dark); font-size: .82rem; font-weight: 750; }
+    h1 { max-width: 700px; margin: 17px 0 12px; font-size: clamp(2rem, 7vw, 3.25rem); line-height: 1.08; letter-spacing: -.055em; }
+    .hero p { max-width: 650px; margin: 0; color: var(--muted); font-size: 1.03rem; }
+    .trust-row { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 20px; }
+    .trust { display: inline-flex; align-items: center; gap: 6px; padding: 7px 10px; border-radius: 10px; background: rgba(255,255,255,.85); color: #3c4d68; font-size: .82rem; font-weight: 650; }
+    main { padding: 12px 0 42px; }
+    .section-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 8px; margin: 10px 0 17px; }
+    .section-head h2 { margin: 0; font-size: 1.35rem; letter-spacing: -.025em; }
+    .section-head p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .card { min-width: 0; padding: 22px; border: 1px solid var(--line); border-radius: 22px; background: var(--surface); box-shadow: var(--shadow); }
+    .card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .tool-icon { display: grid; place-items: center; width: 46px; height: 46px; flex: 0 0 46px; border-radius: 15px; background: var(--blue-soft); font-size: 1.35rem; }
+    .card h3 { margin: 0; font-size: 1.12rem; letter-spacing: -.02em; }
+    .sub { margin: 0 0 17px; color: var(--muted); font-size: .92rem; }
+    label { display: block; margin: 13px 0 6px; font-size: .9rem; font-weight: 750; }
+    input, select {
+      display: block; width: 100%; min-width: 0; padding: 13px 14px; border: 1px solid #d7dfed;
+      border-radius: 12px; background: #fbfcff; color: var(--ink); font: inherit; font-size: 1rem;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    input::placeholder { color: #9aa7ba; }
+    input:focus, select:focus, button:focus-visible, a:focus-visible { outline: 3px solid #b7c8ff; outline-offset: 2px; border-color: var(--blue); }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+    button { width: 100%; margin-top: 16px; padding: 13px 16px; border: 0; border-radius: 12px; background: var(--blue); color: #fff; font: inherit; font-weight: 800; cursor: pointer; box-shadow: 0 5px 12px rgba(49,94,234,.16); transition: background .15s, transform .15s; }
+    button:hover { background: var(--blue-dark); }
+    button:active { transform: translateY(1px); }
+    .result { min-height: 52px; margin-top: 14px; padding: 13px 14px; border: 1px solid #dce6ff; border-radius: 13px; background: #f4f7ff; color: #40516d; font-size: .93rem; overflow-wrap: anywhere; }
+    .result strong { color: var(--blue-dark); font-size: 1.12rem; }
+    .help-card { margin-top: 18px; background: linear-gradient(135deg, #fff, #f8faff); }
+    .help-card h2 { margin: 0 0 7px; font-size: 1.12rem; }
+    .help-card p { margin: 0; color: var(--muted); font-size: .93rem; }
+    .features { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 17px; }
+    .pill { padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px; background: white; color: #4b5b75; font-size: .8rem; font-weight: 700; }
+    footer { padding: 22px 0 30px; border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem; }
+    footer p { margin: 6px 0; }
+    .privacy { margin-top: 14px; padding: 13px 14px; border-radius: 12px; background: #edf8f3; color: #356b59; }
+    @media (max-width: 680px) {
+      .wrap { width: min(100% - 24px, 520px); }
+      .topbar { padding: 14px 0; }
+      .top-label { font-size: .76rem; }
+      .hero { padding: 32px 0 26px; }
+      .grid { grid-template-columns: 1fr; gap: 14px; }
+      .card { padding: 18px; border-radius: 18px; }
+      .section-head { align-items: start; flex-direction: column; }
+    }
+    @media (max-width: 370px) {
+      .top-label { display: none; }
+      .row { grid-template-columns: 1fr; gap: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap brand-row">
+      <div class="brand"><div class="logo" aria-hidden="true">✓</div><span>NotaFácil</span></div>
+      <div class="top-label">Herramientas escolares gratuitas</div>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="wrap">
+      <span class="eyebrow">✦ Fácil, rápido y gratis</span>
+      <h1>Tus calificaciones,<br>más fáciles de entender.</h1>
+      <p>Calcula tu promedio y descubre qué nota necesitas en tu próxima evaluación. Sin registro y directamente desde tu celular.</p>
+      <div class="trust-row">
+        <span class="trust">✓ Gratis</span>
+        <span class="trust">▣ Hecho para celular</span>
+        <span class="trust">⌑ Tus notas no se guardan</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="section-head">
+      <h2>Elige una calculadora</h2>
+      <p>Los resultados son orientativos.</p>
+    </div>
+
+    <div class="grid">
+      <section class="card" aria-labelledby="avg-title">
+        <div class="card-top">
+          <div class="tool-icon" aria-hidden="true">📊</div>
+          <h3 id="avg-title">Calculadora de promedio</h3>
+        </div>
+        <p class="sub">Escribe tus calificaciones separadas por comas. Puedes usar decimales.</p>
+        <label for="grades">Calificaciones (de 0 a 10)</label>
+        <input id="grades" type="text" inputmode="decimal" placeholder="Ej. 8, 9, 7.5, 10" autocomplete="off">
+        <button id="avgBtn">Calcular promedio</button>
+        <div class="result" id="avgResult" role="status" aria-live="polite">Tu resultado aparecerá aquí.</div>
+      </section>
+
+      <section class="card" aria-labelledby="goal-title">
+        <div class="card-top">
+          <div class="tool-icon" aria-hidden="true">🎯</div>
+          <h3 id="goal-title">¿Qué nota necesito?</h3>
+        </div>
+        <p class="sub">Calcula qué calificación necesitas en la siguiente evaluación para alcanzar tu objetivo, suponiendo que todas valen lo mismo.</p>
+        <div class="row">
+          <div><label for="current">Promedio actual</label><input id="current" type="number" min="0" max="10" step="0.01" placeholder="Ej. 8"></div>
+          <div><label for="count">Evaluaciones hechas</label><input id="count" type="number" min="1" max="20" step="1" placeholder="Ej. 2"></div>
+        </div>
+        <label for="target">Promedio que quieres alcanzar</label>
+        <input id="target" type="number" min="0" max="10" step="0.01" placeholder="Ej. 9">
+        <button id="goalBtn">Calcular nota necesaria</button>
+        <div class="result" id="goalResult" role="status" aria-live="polite">Tu resultado aparecerá aquí.</div>
+      </section>
+    </div>
+
+    <section class="card help-card">
+      <h2>💡 Cómo usar NotaFácil</h2>
+      <p>Para calcular tu promedio, escribe cada nota separada por una coma. Para saber qué nota necesitas, indica tu promedio actual, cuántas evaluaciones llevas y tu objetivo. La segunda calculadora supone que todas las evaluaciones tienen el mismo valor; si tu escuela usa otra fórmula, confirma el resultado con tu maestro.</p>
+      <div class="features"><span class="pill">Gratis para usar</span><span class="pill">Sin cuenta</span><span class="pill">No guarda tus notas</span></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p><strong>NotaFácil</strong> es un proyecto independiente y gratuito; no está afiliado a ninguna escuela ni autoridad educativa.</p>
+      <p>Verifica las reglas de evaluación de tu escuela para confirmar tus resultados.</p>
+      <div class="privacy"><strong>Privacidad:</strong> los cálculos se hacen en tu navegador. Esta versión no envía ni guarda tus calificaciones.</div>
+    </div>
+  </footer>
+
+  <script>
+    const $ = id => document.getElementById(id);
+
+    $('avgBtn').addEventListener('click', () => {
+      const raw = $('grades').value.trim();
+      const result = $('avgResult');
+      if (!raw) { result.textContent = 'Escribe al menos una calificación.'; return; }
+      const parts = raw.split(/[,\s;]+/).filter(Boolean);
+      const nums = parts.map(v => Number(v.replace(',', '.')));
+      if (nums.some(n => !Number.isFinite(n) || n < 0 || n > 10)) {
+        result.textContent = 'Revisa los datos: usa notas entre 0 y 10 separadas por comas.'; return;
+      }
+      const avg = nums.reduce((a,b) => a+b, 0) / nums.length;
+      result.innerHTML = 'Tu promedio es <strong>' + avg.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</strong> sobre 10.';
+    });
+
+    $('goalBtn').addEventListener('click', () => {
+      const current = Number($('current').value);
+      const count = Number($('count').value);
+      const target = Number($('target').value);
+      const result = $('goalResult');
+      if ($('current').value === '' || $('count').value === '' || $('target').value === '' ||
+          !Number.isFinite(current) || !Number.isInteger(count) || count < 1 || count > 20 ||
+          current < 0 || current > 10 || target < 0 || target > 10) {
+        result.textContent = 'Completa los campos correctamente. Las notas deben estar entre 0 y 10 y las evaluaciones entre 1 y 20.'; return;
+      }
+      const needed = target * (count + 1) - current * count;
+      if (needed <= 0) result.innerHTML = 'Ya alcanzarías ese objetivo si obtienes una nota de <strong>0</strong> o más en la siguiente evaluación.';
+      else if (needed > 10) result.innerHTML = 'Necesitarías <strong>' + needed.toLocaleString('es-MX',{maximumFractionDigits:2}) + '</strong>. Es más de 10, así que no se puede alcanzar solo con la siguiente evaluación bajo estos supuestos.';
+      else result.innerHTML = 'Necesitas aproximadamente <strong>' + needed.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</strong> sobre 10 en la siguiente evaluación.';
+    });
+  </script>
+</body>
+</html>
