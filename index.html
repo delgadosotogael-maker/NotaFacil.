@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Calcula tu promedio escolar y descubre qué calificación necesitas. Herramientas gratuitas para estudiantes.">
+  <meta name="theme-color" content="#101827">
+  <title>NotaFácil — Calculadoras escolares gratuitas</title>
+  <style>
+    :root{--bg:#f4f7fb;--ink:#152238;--muted:#5c6b80;--card:#fff;--blue:#1769e0;--line:#dce5f0;--dark:#101827}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+    header{background:var(--dark);color:white;padding:28px 18px 34px}
+    .wrap{width:min(920px,100% - 28px);margin:auto}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:1.35rem}
+    .logo{display:grid;place-items:center;width:42px;height:42px;border-radius:13px;background:#d8edff;color:#1356a8;font-size:1.4rem}
+    header p{color:#d1dced;max-width:600px;margin:12px 0 0}
+    main{padding:24px 0 38px}
+    .intro{margin:0 0 18px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 5px 18px #172b4608}
+    h1{font-size:clamp(1.55rem,4vw,2.1rem);line-height:1.15;margin:18px 0 0}
+    h2{font-size:1.2rem;margin:0 0 7px}
+    .sub{color:var(--muted);margin:0 0 16px;font-size:.94rem}
+    label{display:block;font-weight:650;font-size:.93rem;margin:12px 0 6px}
+    input,select{font:inherit;width:100%;padding:12px;border:1px solid #c8d5e5;border-radius:10px;background:white;color:var(--ink)}
+    input:focus,select:focus,button:focus{outline:3px solid #91c4ff;outline-offset:2px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    button{font:inherit;font-weight:750;border:0;border-radius:11px;padding:12px 15px;background:var(--blue);color:white;width:100%;margin-top:15px;cursor:pointer}
+    button.secondary{background:#e8f1ff;color:#164f9e}
+    .result{margin-top:14px;border-radius:12px;padding:13px;background:#eef6ff;border:1px solid #cfe4ff;min-height:48px}
+    .result strong{font-size:1.2rem}
+    .small{font-size:.85rem;color:var(--muted)}
+    .features{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+    .pill{background:#e8f1ff;color:#164f9e;padding:6px 10px;border-radius:999px;font-size:.83rem;font-weight:650}
+    footer{padding:20px 0 28px;color:var(--muted);font-size:.86rem}
+    footer a{color:#164f9e}
+    .privacy{border-top:1px solid var(--line);margin-top:20px;padding-top:16px}
+    @media(max-width:420px){.card{padding:16px}.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand"><div class="logo" aria-hidden="true">✓</div><span>NotaFácil</span></div>
+    <h1>Calcula tus calificaciones sin complicarte.</h1>
+    <p>Herramientas escolares gratuitas, sencillas y pensadas para usar desde tu celular. Tus cálculos se hacen en este dispositivo.</p>
+  </div>
+</header>
+<main class="wrap">
+  <p class="intro">Elige una herramienta. Si tu escuela usa una forma especial de calcular las notas, confirma el resultado con tu maestro.</p>
+  <div class="grid">
+    <section class="card" aria-labelledby="avg-title">
+      <h2 id="avg-title">📊 Calculadora de promedio</h2>
+      <p class="sub">Escribe tus calificaciones separadas por comas. Puedes usar decimales.</p>
+      <label for="grades">Calificaciones (de 0 a 10)</label>
+      <input id="grades" type="text" inputmode="decimal" placeholder="Ej. 8, 9, 7.5, 10" autocomplete="off">
+      <button id="avgBtn">Calcular promedio</button>
+      <div class="result" id="avgResult" role="status" aria-live="polite">Tu resultado aparecerá aquí.</div>
+    </section>
+    <section class="card" aria-labelledby="goal-title">
+      <h2 id="goal-title">🎯 ¿Qué nota necesito?</h2>
+      <p class="sub">Calcula qué calificación necesitas en la siguiente evaluación para alcanzar tu promedio objetivo, suponiendo que todas valen lo mismo.</p>
+      <div class="row">
+        <div><label for="current">Promedio actual</label><input id="current" type="number" min="0" max="10" step="0.01" placeholder="Ej. 8"></div>
+        <div><label for="count">Evaluaciones hechas</label><input id="count" type="number" min="1" max="20" step="1" placeholder="Ej. 2"></div>
+      </div>
+      <label for="target">Promedio que quieres alcanzar</label>
+      <input id="target" type="number" min="0" max="10" step="0.01" placeholder="Ej. 9">
+      <button id="goalBtn">Calcular nota necesaria</button>
+      <div class="result" id="goalResult" role="status" aria-live="polite">Tu resultado aparecerá aquí.</div>
+    </section>
+  </div>
+  <section class="card" style="margin-top:16px">
+    <h2>Cómo usar estas calculadoras</h2>
+    <p>Para el promedio, escribe cada calificación separada por una coma. Para la nota necesaria, indica tu promedio actual, cuántas evaluaciones llevas y tu objetivo. La segunda calculadora supone que todas las evaluaciones tienen el mismo valor.</p>
+    <div class="features"><span class="pill">Gratis</span><span class="pill">Adaptada al celular</span><span class="pill">Sin registro</span><span class="pill">Sin guardar tus notas</span></div>
+  </section>
+</main>
+<footer class="wrap">
+  <p><strong>NotaFácil</strong> es un proyecto independiente y gratuito; no está afiliado a ninguna escuela ni autoridad educativa.</p>
+  <p>Los resultados son orientativos. Verifica las reglas de evaluación de tu escuela.</p>
+  <div class="privacy"><strong>Privacidad:</strong> estas herramientas calculan los resultados en tu navegador. Esta versión no envía ni guarda tus calificaciones.</div>
+</footer>
+<script>
+  const $ = id => document.getElementById(id);
+  $('avgBtn').addEventListener('click', () => {
+    const raw = $('grades').value.trim();
+    const result = $('avgResult');
+    if (!raw) { result.textContent = 'Escribe al menos una calificación.'; return; }
+    const parts = raw.split(/[,\s;]+/).filter(Boolean);
+    const nums = parts.map(v => Number(v.replace(',', '.')));
+    if (nums.some(n => !Number.isFinite(n) || n < 0 || n > 10)) {
+      result.textContent = 'Revisa los datos: usa notas entre 0 y 10 separadas por comas.'; return;
+    }
+    const avg = nums.reduce((a,b) => a+b, 0) / nums.length;
+    result.innerHTML = 'Tu promedio es <strong>' + avg.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</strong> sobre 10.';
+  });
+  $('goalBtn').addEventListener('click', () => {
+    const current = Number($('current').value);
+    const count = Number($('count').value);
+    const target = Number($('target').value);
+    const result = $('goalResult');
+    if ($('current').value === '' || $('count').value === '' || $('target').value === '' ||
+        !Number.isFinite(current) || !Number.isInteger(count) || count < 1 || count > 20 ||
+        current < 0 || current > 10 || target < 0 || target > 10) {
+      result.textContent = 'Completa los campos correctamente. Las notas deben estar entre 0 y 10 y las evaluaciones entre 1 y 20.'; return;
+    }
+    const needed = target * (count + 1) - current * count;
+    if (needed <= 0) result.innerHTML = 'Ya alcanzarías ese objetivo si obtienes una nota de <strong>0</strong> o más en la siguiente evaluación.';
+    else if (needed > 10) result.innerHTML = 'Necesitarías <strong>' + needed.toLocaleString('es-MX',{maximumFractionDigits:2}) + '</strong>. Es más de 10, así que no se puede alcanzar solo con la siguiente evaluación bajo estos supuestos.';
+    else result.innerHTML = 'Necesitas aproximadamente <strong>' + needed.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</strong> sobre 10 en la siguiente evaluación.';
+  });
+</script>
+</body>
+</html>
